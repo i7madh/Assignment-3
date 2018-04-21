@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>CPIT-405</title>
+ <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+ <link rel="stylesheet" href="css/bootstrap.min.css">
+ <link rel="stylesheet" href="css/style.css">
+ <meta name"viewport" content="width=device-width, initial-scale=1,user-scalable=no" >
+ <script src="JavaScript/bootstrap.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script type="text/javascript" src="JavaScript/Script.js"></script>
+
+</head>
+<body >
+
+  <ul>
+    <li><a class="active" href="#">Home</a></li>
+    <li><a href="#">News</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+
+ <div class="row">
+
+<h2>Available Books</h2>
+
+<button class="btn btn-success" onclick="">Sort By Highest Price</button>
+<button class="btn btn-success" onclick="">Sort By Lowest Price</button>
+<button class="btn btn-success" onclick="">Sort By Reviwes</button>
+<button class="btn btn-success" onclick="">Sort By Date</button>
+<button class="btn btn-success" onclick="">Sort By Star rate</button> <hr>
+
+ <div class="form-groub">
+  <h1>Search For a Book</h1>
+  <input id="search" class="form-control" placeholder="JavaScript tutorial book "> <br>
+  <button id="button" type="button" class="btn btn-primary"> Search</button>  <hr>
+
+  <div id="results" class="form-groub">
+
+  </div>
+
+ </div>
+
+ </div>
+
+
+
+
+    <script>
+
+    function bookSearch() {
+      var search = document.getElementById('search').value
+      document.getElementById('results').innerHTML = ""
+      console.log(search)
+
+      $.ajax({
+        url:"https://www.googleapis.com/books/v1/volumes?q=" + search,
+        dataType: "json",
+        succsess: function(data) {
+          for(i = 0 ; i < data.items.length ; i++){
+            results.innerHTML +=
+             "<img src=" + data.items[i].volumeInfo.imageLinks.thumbnail + "> <br>" +
+              data.items[i].volumeInfo.title + "</h2> <br>" +
+             "<h2> Title:" + data.items[i].volumeInfo.title + "</h2> <br>" +
+             "<p> Auther:" + data.items[i].volumeInfo.authors + "</p> <br>" +
+             "<p> Published Date:" + data.items[i].volumeInfo.publishedDate + "</p> <br>" +
+             "<p> Rate:" + data.items[i].volumeInfo.averageRating + "</p> <br> <hr>"
+
+
+          }
+        } ,
+        type: 'GET'
+      }) ;
+
+    }
+
+    document.getElementById('button').addEventListener('click', bookSearch, false );
+
+    </script>
+  </body>
+</html>
